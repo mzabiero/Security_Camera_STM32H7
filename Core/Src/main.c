@@ -38,9 +38,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "board.h"
-#include "lcd.h"
-#include "camera.h"
+#include "menu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -186,64 +184,22 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //board_button_init();
   //board_led_init();
-
-  LCD_Test();
-
-  uint8_t text[30];
-
-  sprintf((char *)&text, "Camera Not Found");
-  LCD_ShowString(0, 58, ST7735Ctx.Width, 16, 16, text);
-
-  #ifdef TFT96
-	Camera_Init_Device(&hi2c1, FRAMESIZE_QQVGA);
-	#elif TFT18
-	Camera_Init_Device(&hi2c1, FRAMESIZE_QQVGA2);
-	#endif
-	//clean Ypos 58
-	ST7735_LCD_Driver.FillRect(&st7735_pObj, 0, 58, ST7735Ctx.Width, 16, BLACK);
-
-  while (HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin) == GPIO_PIN_RESET)
-  {
-
-    sprintf((char *)&text, "Camera id:0x%x        ", hcamera.device_id);
-    LCD_ShowString(4, 58, ST7735Ctx.Width, 16, 12, text);
-
-		HAL_Delay(500);
-
-    sprintf((char *)&text, "LongPress K1 to Run");
-    LCD_ShowString(4, 58, ST7735Ctx.Width, 16, 12, text);
-
-		HAL_Delay(500);
-  }
-
-  HAL_DCMI_Start_DMA(&hdcmi, DCMI_MODE_CONTINUOUS, (uint32_t)&pic, FrameWidth * FrameHeight * 2 / 4);
-
+  Menu_InitWrapper();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  Menu_Loop();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		if (DCMI_FrameIsReady)
-    {
-        DCMI_FrameIsReady = 0;
-        #ifdef TFT96
-        ST7735_FillRGBRect(&st7735_pObj,0,0,(uint8_t *)&pic[20][0], ST7735Ctx.Width, 80);
-        #elif TFT18
-        ST7735_FillRGBRect(&st7735_pObj,0,0,(uint8_t *)&pic[0][0], ST7735Ctx.Width, ST7735Ctx.Height);
-        #endif
 
-        sprintf((char *)&text,"%dFPS",Camera_FPS);
-        LCD_ShowString(5,5,60,16,12,text);
-
-        board_led_toggle();
     }
   }
   /* USER CODE END 3 */
-}
+
 
 /**
   * @brief System Clock Configuration

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "camera.h"
 #include "main.h"
+
+
 
 // Struktura błędów kamery
 typedef enum {
@@ -22,12 +23,12 @@ typedef struct {
 extern Camera_Settings_t AppCamSettings;
 
 // Funkcje do obsługi kamery
-Cam_Status_t Camera_Init(void);
-Cam_Status_t Camera_StartStream(uint32_t *buffer_addr, uint32_t buffer_size);
-Cam_Status_t Camera_StopStream(void);
+Cam_Status_t CameraCtrl_Init(void);
+Cam_Status_t CameraCtrl_StartStream(uint32_t *buffer_addr, uint32_t buffer_size);
+Cam_Status_t CameraCtrl_StopStream(void);
 
 // Funkcje pomocnicze/ wrappery dla biblioteki
-Cam_Status_t Camera_SetBrightness(uint8_t val);
-Cam_Status_t Camera_SetContrast(uint8_t val);
-Cam_Status_t Camera_SetNightMode(uint8_t enable);
+Cam_Status_t CameraCtrl_SetBrightness(uint8_t val);
+Cam_Status_t CameraCtrl_SetContrast(uint8_t val);
+Cam_Status_t CameraCtrl_SetNightMode(uint8_t enable);
 
