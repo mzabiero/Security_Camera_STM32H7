@@ -1,0 +1,36 @@
+# Build directories
+Debug/
+Release/
+
+# STM32CubeIDE / Eclipse metadata
+.settings/
+.project
+.cproject
+
+# Debug launch files
+*.launch
+
+# Backup files
+*~
+*.bak
+
+# Compiled objects
+*.o
+*.d
+*.su
+*.map
+*.elf
+*.bin
+*.hex
+
+# CMake / Make caches (jeśli kiedyś użyjesz)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Log files
+*.log
+
+# Misc garbage
+*.ioc-backup
+*.tmp
